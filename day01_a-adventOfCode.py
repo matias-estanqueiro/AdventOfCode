@@ -15,3 +15,4 @@ for i in range(len(sortedArray)):
     totalDistance = totalDistance + abs(sortedArray[i] - sortedArray2[i])
 
 print(totalDistance)
+inputFile.close()

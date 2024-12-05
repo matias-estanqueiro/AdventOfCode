@@ -21,3 +21,4 @@ for element in numberList1:
         acumulator = acumulator + (array2occurrencies[element] * element)
 
 print(acumulator)
+inputFile.close()
