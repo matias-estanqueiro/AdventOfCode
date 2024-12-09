@@ -1,12 +1,10 @@
 from re import split
-rowLevels = []
-levelResults = []
 
+rowLevels = []
 safeLevels = 0
 
 def convertToInt(string):
     return int(string)
-
 
 with open ('day02-Input', 'r') as inputFile:
     for row in inputFile:
@@ -14,17 +12,32 @@ with open ('day02-Input', 'r') as inputFile:
         rowLevels.append(split('\D+', row))
     
 for level in rowLevels:
+    increasing = True
+    decreasing = True
+    adyacent = True
+
     level = list(map(convertToInt, level))
-    for element in range(len(level)-1):
+
+    for element in range(len(level) - 1):
         result = level[element] - level[element + 1]
-        levelResults.append(result)
+        if result >= 0:
+            increasing = False
+            break
     
-    if all(1 <= num <= 3 for num in levelResults):
+    for element in range(len(level) - 1):
+        result = level[element] - level[element + 1]
+        if result <= 0:
+            decreasing = False
+            break
+
+    for element in range(len(level) - 1):
+        result = abs(level[element] - level[element + 1])
+        if not (1 <= result <= 3):
+            adyacent = False
+            break
+
+    if (increasing or decreasing) and adyacent:
         safeLevels = safeLevels + 1
-    
-    if all(-3 <= num <= -1 for num in levelResults):
-        safeLevels = safeLevels + 1
-    levelResults = []
     
 print(safeLevels)
 inputFile.close()
