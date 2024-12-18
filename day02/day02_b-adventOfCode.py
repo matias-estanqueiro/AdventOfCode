@@ -1,7 +1,5 @@
 # https://adventofcode.com/2024/day/2
 
-from re import split
-
 rowLevels = []
 safeLevels = 0
 
@@ -35,28 +33,28 @@ def isSafe(uncheckedLevel):
         return True
     else:
         return False
-
+#########################
 
 with open ('day02-Input', 'r') as inputFile:
     for row in inputFile:
         row = row.strip()
-        rowLevels.append(split('\D+', row))
+        rowLevels.append(row.split())
     
 for level in rowLevels:
-    increasing = True
-    decreasing = True
-    adyacent = True
-
     level = list(map(convertToInt, level))
-    safeOrUnsafe = isSafe(level)
+    safe = isSafe(level)
 
-    if safeOrUnsafe:
+    if safe:
         safeLevels = safeLevels + 1
     else:
+        # If the level is not safe, each of its elements is iterated over, removing one at a time and checking if the resulting level is safe.
         for element in range(len(level)):
+            # A copy of the level is created
             newLevel = level.copy()
+            # The element is removed
             del newLevel[element]
             newOportunitySafe = isSafe(newLevel)
+            # If removing one of its elements makes the resulting level safe, the counter of safe levels is incremented, and the loop is exited.
             if newOportunitySafe:
                 safeLevels = safeLevels + 1
                 break
